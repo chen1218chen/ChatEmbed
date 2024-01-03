@@ -1,6 +1,6 @@
 {
-  "name": "cmcc-chat-embed",
-  "version": "1.0.2",
+  "name": "cmict-chat-embed",
+  "version": "1.0.1",
   "description": "Javascript library to display flowise chatbot on your website",
   "type": "module",
   "main": "dist/index.js",
