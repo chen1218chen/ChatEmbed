@@ -4,6 +4,7 @@ type Props = {
   botContainer: HTMLDivElement | undefined;
   poweredByTextColor?: string;
   badgeBackgroundColor?: string;
+  poweredByText?: string;
 };
 
 const defaultTextColor = '#303235';
@@ -50,7 +51,8 @@ export const Badge = (props: Props) => {
         'background-color': props.badgeBackgroundColor ?? '#ffffff',
       }}
     >
-      Powered by
+      <span style={{ 'font-weight': 'bold', color: props.poweredByTextColor ?? defaultTextColor }}>{props.poweredByText}</span>
+      {/* Powered by
       <a
         ref={liteBadge}
         href={'https://flowiseai.com'}
@@ -61,7 +63,7 @@ export const Badge = (props: Props) => {
         style={{ 'font-weight': 'bold', color: props.poweredByTextColor ?? defaultTextColor }}
       >
         <span> Flowise</span>
-      </a>
+      </a> */}
     </span>
   );
 };

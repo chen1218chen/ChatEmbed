@@ -15,6 +15,7 @@ export type BotProps = {
     userMessage?: UserMessageTheme;
     textInput?: TextInputTheme;
     poweredByTextColor?: string;
+    poweredByText?: string;
     badgeBackgroundColor?: string;
     bubbleBackgroundColor?: string;
     bubbleTextColor?: string;
