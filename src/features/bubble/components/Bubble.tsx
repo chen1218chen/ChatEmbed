@@ -27,7 +27,7 @@ export const Bubble = (props: BubbleProps) => {
   const toggleBot = () => {
     isBotOpened() ? closeBot() : openBot();
   };
-
+  console.log("bubble========",props)
   return (
     <>
       <style>{styles}</style>
@@ -58,6 +58,7 @@ export const Bubble = (props: BubbleProps) => {
             titleAvatarSrc={bubbleProps.theme?.chatWindow?.titleAvatarSrc}
             welcomeMessage={bubbleProps.theme?.chatWindow?.welcomeMessage}
             poweredByTextColor={bubbleProps.theme?.chatWindow?.poweredByTextColor}
+            poweredByText={bubbleProps.theme?.chatWindow?.poweredByText}
             textInput={bubbleProps.theme?.chatWindow?.textInput}
             botMessage={bubbleProps.theme?.chatWindow?.botMessage}
             userMessage={bubbleProps.theme?.chatWindow?.userMessage}
@@ -65,6 +66,7 @@ export const Bubble = (props: BubbleProps) => {
             chatflowid={props.chatflowid}
             chatflowConfig={props.chatflowConfig}
             apiHost={props.apiHost}
+            category={props.category}
           />
         </Show>
       </div>

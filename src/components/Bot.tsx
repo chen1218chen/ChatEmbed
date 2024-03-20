@@ -27,6 +27,7 @@ export type BotProps = {
   chatflowid: string;
   apiHost?: string;
   chatflowConfig?: Record<string, unknown>;
+  category?: string;
   welcomeMessage?: string;
   botMessage?: BotMessageTheme;
   userMessage?: UserMessageTheme;
@@ -125,7 +126,7 @@ export const Bot = (props: BotProps & { class?: string }) => {
   let chatContainer: HTMLDivElement | undefined;
   let bottomSpacer: HTMLDivElement | undefined;
   let botContainer: HTMLDivElement | undefined;
-
+  console.log('result======', process);
   const [userInput, setUserInput] = createSignal('');
   const [loading, setLoading] = createSignal(false);
   const [sourcePopupOpen, setSourcePopupOpen] = createSignal(false);
@@ -242,7 +243,7 @@ export const Bot = (props: BotProps & { class?: string }) => {
       apiHost: props.apiHost,
       body,
     });
-
+  
     if (result.data) {
       const data = result.data;
       if (!isChatFlowAvailableToStream()) {
@@ -397,7 +398,7 @@ export const Bot = (props: BotProps & { class?: string }) => {
     });
     return newSourceDocuments;
   };
-
+  console.log(props);
   return (
     <>
       <div
@@ -431,6 +432,7 @@ export const Bot = (props: BotProps & { class?: string }) => {
                       textColor={props.botMessage?.textColor}
                       showAvatar={props.botMessage?.showAvatar}
                       avatarSrc={props.botMessage?.avatarSrc}
+                      category={props.category}
                     />
                   )}
                   {message.type === 'userMessage' && loading() && index() === messages().length - 1 && <LoadingBubble />}

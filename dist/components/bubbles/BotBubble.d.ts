@@ -1,6 +1,7 @@
 type Props = {
     message: string;
     apiHost?: string;
+    category?: string;
     fileAnnotations?: any;
     showAvatar?: boolean;
     avatarSrc?: string;

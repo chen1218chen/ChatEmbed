@@ -14,7 +14,7 @@ export const Full = (props: FullProps, { element }: { element: HTMLElement }) =>
   const launchBot = () => {
     setIsBotDisplayed(true);
   };
-
+  console.log("Full========",props)
   const botLauncherObserver = new IntersectionObserver((intersections) => {
     if (intersections.some((intersection) => intersection.isIntersecting)) launchBot();
   });
@@ -54,6 +54,7 @@ export const Full = (props: FullProps, { element }: { element: HTMLElement }) =>
             fontSize={props.theme?.chatWindow?.fontSize}
             chatflowid={props.chatflowid}
             chatflowConfig={props.chatflowConfig}
+            category={props.category}
             apiHost={props.apiHost}
             isFullPage={true}
           />
