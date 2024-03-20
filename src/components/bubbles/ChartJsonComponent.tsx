@@ -1,4 +1,4 @@
-import { createEffect ,onMount} from 'solid-js';
+import { createEffect, onMount } from 'solid-js';
 import * as echarts from 'echarts';
 import _ from 'lodash';
 import { sendRequest } from '@/utils/index';
@@ -22,10 +22,10 @@ export const ChartJsonComponent = (props: Props) => {
 
   onMount(() => {
     let optionsData;
-    const data = props.data
+    const data = props.data;
     try {
       optionsData = JSON.parse(data);
-      console.log("option======",optionsData)
+      console.log('option======', optionsData);
       // if (_.includes(data, 'map') || _.includes(data, 'geo') || _.includes(data, 'mapType')) {
       //   if (_.includes(data, 'mapType')) {
       //     if (optionsData && optionsData.series) {

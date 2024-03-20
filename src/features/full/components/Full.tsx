@@ -14,7 +14,7 @@ export const Full = (props: FullProps, { element }: { element: HTMLElement }) =>
   const launchBot = () => {
     setIsBotDisplayed(true);
   };
-  console.log("Full========",props)
+  console.log('Full========', props);
   const botLauncherObserver = new IntersectionObserver((intersections) => {
     if (intersections.some((intersection) => intersection.isIntersecting)) launchBot();
   });

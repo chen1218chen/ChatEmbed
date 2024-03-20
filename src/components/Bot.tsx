@@ -243,7 +243,7 @@ export const Bot = (props: BotProps & { class?: string }) => {
       apiHost: props.apiHost,
       body,
     });
-  
+
     if (result.data) {
       const data = result.data;
       if (!isChatFlowAvailableToStream()) {

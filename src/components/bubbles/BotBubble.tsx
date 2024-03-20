@@ -22,7 +22,7 @@ Marked.setOptions({ isNoP: true });
 
 export const BotBubble = (props: Props) => {
   let botMessageEl: HTMLDivElement | undefined;
-  
+
   const downloadFile = async (fileAnnotation: any) => {
     try {
       const response = await sendFileDownloadQuery({
@@ -45,7 +45,7 @@ export const BotBubble = (props: Props) => {
   onMount(() => {
     if (botMessageEl) {
       if (props.category?.toUpperCase() === 'DATABASE') {
-        return <ChartJsonComponent data={props.message}></ChartJsonComponent>;
+        return <ChartJsonComponent data={props.message} />;
       }
       botMessageEl.innerHTML = Marked.parse(props.message);
       if (props.fileAnnotations && props.fileAnnotations.length) {

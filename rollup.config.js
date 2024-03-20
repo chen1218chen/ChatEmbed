@@ -10,6 +10,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import { uglify } from 'rollup-plugin-uglify';
 import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';
+import json from '@rollup/plugin-json';
 
 const extensions = ['.ts', '.tsx'];
 
@@ -18,6 +19,7 @@ const indexConfig = {
     resolve({ extensions, browser: true }),
     commonjs(),
     uglify(),
+    json(),
     babel({
       babelHelpers: 'bundled',
       exclude: 'node_modules/**',

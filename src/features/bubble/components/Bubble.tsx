@@ -27,7 +27,7 @@ export const Bubble = (props: BubbleProps) => {
   const toggleBot = () => {
     isBotOpened() ? closeBot() : openBot();
   };
-  console.log("bubble========",props)
+  console.log('bubble========', props);
   return (
     <>
       <style>{styles}</style>
