@@ -62,7 +62,7 @@ const configs = [
     input: './src/web.ts',
     output: {
       format: 'umd',
-      name: 'web',  // 如果format是umd, name必填否则报错
+      name: 'web', // 如果format是umd, name必填否则报错
       file: 'dist/web.js',
       format: 'es',
       sourcemap: true,

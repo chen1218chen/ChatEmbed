@@ -1,12 +1,12 @@
-import { createEffect, onMount } from 'solid-js';
+import { onMount } from 'solid-js';
 import * as echarts from 'echarts';
 import _ from 'lodash';
 import { sendRequest } from '@/utils/index';
-import chainMap  from '../../assets/mapjson/china.json'
+import chainMap from '../../assets/mapjson/china.json';
 type Props = {
   data: string;
 };
-const map: any = chainMap
+const map: any = chainMap;
 export const ChartJsonComponent = (props: Props) => {
   let chartRef: HTMLDivElement | undefined;
   let chart: any;
@@ -25,7 +25,7 @@ export const ChartJsonComponent = (props: Props) => {
   onMount(() => {
     const data = props.data;
     const optionsData = JSON.parse(data);
-    
+
     if (_.includes(data, 'map') || _.includes(data, 'geo') || _.includes(data, 'mapType')) {
       if (_.includes(data, 'mapType')) {
         if (optionsData && optionsData.series) {
