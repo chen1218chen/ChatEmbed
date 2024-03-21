@@ -11,8 +11,11 @@ import { uglify } from 'rollup-plugin-uglify';
 import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';
 import json from '@rollup/plugin-json';
+import replace from '@rollup/plugin-replace';
 
 const extensions = ['.ts', '.tsx'];
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 const indexConfig = {
   plugins: [
@@ -20,6 +23,10 @@ const indexConfig = {
     commonjs(),
     uglify(),
     json(),
+    replace({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      preventAssignment: true,
+    }),
     babel({
       babelHelpers: 'bundled',
       exclude: 'node_modules/**',
@@ -54,8 +61,12 @@ const configs = [
     ...indexConfig,
     input: './src/web.ts',
     output: {
+      format: 'umd',
+      name: 'web',  // 如果format是umd, name必填否则报错
       file: 'dist/web.js',
       format: 'es',
+      sourcemap: true,
+      // banner: Global
     },
   },
 ];

@@ -2,10 +2,11 @@ import { createEffect, onMount } from 'solid-js';
 import * as echarts from 'echarts';
 import _ from 'lodash';
 import { sendRequest } from '@/utils/index';
-import '../../assets/mapjson/china.json';
+import chainMap  from '../../assets/mapjson/china.json'
 type Props = {
   data: string;
 };
+const map: any = chainMap
 export const ChartJsonComponent = (props: Props) => {
   let chartRef: HTMLDivElement | undefined;
   let chart: any;
@@ -16,52 +17,46 @@ export const ChartJsonComponent = (props: Props) => {
   //       chart.dispose();
   //     }
   //     chart = echarts.init(chartRef);
-  //     chart.setOption(JSON.parse(props.data));
+  //     let data = JSON.parse(props.data);
+  //     chart.setOption(data);
   //   }
   // }, [props.data]);
 
   onMount(() => {
-    let optionsData;
     const data = props.data;
-    try {
-      optionsData = JSON.parse(data);
-      console.log('option======', optionsData);
-      // if (_.includes(data, 'map') || _.includes(data, 'geo') || _.includes(data, 'mapType')) {
-      //   if (_.includes(data, 'mapType')) {
-      //     if (optionsData && optionsData.series) {
-      //       // const lastType = _.last(_.map(data, 'mapType'))
-      //       const lastType = _.get(_.last(optionsData.series), 'mapType');
-      //       const showType = _.get(_.last(optionsData.series), 'type');
-      //       console.log('lastType', lastType);
+    const optionsData = JSON.parse(data);
+    
+    if (_.includes(data, 'map') || _.includes(data, 'geo') || _.includes(data, 'mapType')) {
+      if (_.includes(data, 'mapType')) {
+        if (optionsData && optionsData.series) {
+          // const lastType = _.last(_.map(data, 'mapType'))
+          const lastType = _.get(_.last(optionsData.series), 'mapType');
+          const showType = _.get(_.last(optionsData.series), 'type');
 
-      //       if (lastType && showType === 'map') {
-      //         if (lastType === 'china') {
-      //           echarts.registerMap('china', require('../../assets/mapjson/china.json'));
-      //         }
-      //         fetchData(lastType).then((res) => {
-      //           if (res) {
-      //             getGeoJsonData(res).then((geoJson: any) => {
-      //               try {
-      //                 if (geoJson) {
-      //                   echarts.registerMap(lastType, geoJson);
-      //                 }
-      //               } catch (error) {
-      //                 console.log('error', error);
-      //               }
-      //             });
-      //           }
-      //         });
-      //       }
-      //     }
-      //   }
-      // }
-      chart = echarts.init(chartRef);
-      chart.setOption(optionsData);
-      // window.addEventListener("resize", () => chart?.resize())
-    } catch (error) {
-      console.error('echart option json格式化失败', error);
-      return;
+          if (lastType && showType === 'map') {
+            if (lastType === 'china') {
+              echarts.registerMap('china', map);
+            }
+            fetchData(lastType).then((res) => {
+              if (res) {
+                getGeoJsonData(res).then((geoJson: any) => {
+                  try {
+                    if (geoJson) {
+                      echarts.registerMap(lastType, geoJson);
+                    }
+                  } catch (error) {
+                    console.log('error', error);
+                  }
+                });
+              }
+            });
+          }
+        }
+      }
     }
+    chart = echarts.init(chartRef);
+    chart.setOption(optionsData);
+    // window.addEventListener("resize", () => chart?.resize())
   });
 
   const fetchData = async (cityName: string) => {
@@ -106,5 +101,5 @@ export const ChartJsonComponent = (props: Props) => {
     return geoJsonData;
   };
 
-  return <div ref={chartRef} style={{ width: '100%', height: '400px' }} />;
+  return <div ref={chartRef} style={{ width: '100%', height: '400px', 'margin-top': '20px' }} id="echarts" />;
 };

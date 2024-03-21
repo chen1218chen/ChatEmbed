@@ -126,7 +126,7 @@ export const Bot = (props: BotProps & { class?: string }) => {
   let chatContainer: HTMLDivElement | undefined;
   let bottomSpacer: HTMLDivElement | undefined;
   let botContainer: HTMLDivElement | undefined;
-  console.log('result======', process);
+
   const [userInput, setUserInput] = createSignal('');
   const [loading, setLoading] = createSignal(false);
   const [sourcePopupOpen, setSourcePopupOpen] = createSignal(false);
@@ -345,7 +345,7 @@ export const Bot = (props: BotProps & { class?: string }) => {
       }
     }
 
-    const socket = socketIOClient(props.apiHost as string);
+    const socket: any = socketIOClient(props.apiHost as string);
 
     socket.on('connect', () => {
       setSocketIOClientId(socket.id);
@@ -398,7 +398,6 @@ export const Bot = (props: BotProps & { class?: string }) => {
     });
     return newSourceDocuments;
   };
-  console.log(props);
   return (
     <>
       <div
