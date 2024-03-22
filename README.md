@@ -4,7 +4,6 @@
 
 Javascript library to display OneCityChains chatbot on your website
 
-
 Install:
 
 ```bash
@@ -33,7 +32,7 @@ yarn build
   Chatbot.init({
     chatflowid: '<chatflowid>',
     apiHost: 'http://localhost:3000',
-    category:"database" //可选
+    category: 'database', //可选
   });
 </script>
 ```
@@ -46,7 +45,7 @@ yarn build
   Chatbot.initFull({
     chatflowid: '<chatflowid>',
     apiHost: 'http://localhost:3000',
-    category:"database" //可选
+    category: 'database', //可选
   });
 </script>
 <flowise-fullchatbot></flowise-fullchatbot>
