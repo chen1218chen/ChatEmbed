@@ -1,11 +1,13 @@
-import { Show, onMount } from 'solid-js';
+import { Show, onMount, createSignal } from 'solid-js';
 import { Avatar } from '../avatars/Avatar';
 import { Marked } from '@ts-stack/markdown';
 import { sendFileDownloadQuery } from '@/queries/sendMessageQuery';
+import { ChartJsonComponent } from './ChartJsonComponent';
 
 type Props = {
   message: string;
   apiHost?: string;
+  category?: string;
   fileAnnotations?: any;
   showAvatar?: boolean;
   avatarSrc?: string;
@@ -21,6 +23,7 @@ Marked.setOptions({ isNoP: true });
 export const BotBubble = (props: Props) => {
   let botMessageEl: HTMLDivElement | undefined;
 
+  const [isCharts, setIsCharts] = createSignal(false);
   const downloadFile = async (fileAnnotation: any) => {
     try {
       const response = await sendFileDownloadQuery({
@@ -41,23 +44,29 @@ export const BotBubble = (props: Props) => {
   };
 
   onMount(() => {
-    if (botMessageEl) {
-      botMessageEl.innerHTML = Marked.parse(props.message);
-      if (props.fileAnnotations && props.fileAnnotations.length) {
-        for (const annotations of props.fileAnnotations) {
-          const button = document.createElement('button');
-          button.textContent = annotations.fileName;
-          button.className =
-            'py-2 px-4 mb-2 justify-center font-semibold text-white focus:outline-none flex items-center disabled:opacity-50 disabled:cursor-not-allowed disabled:brightness-100 transition-all filter hover:brightness-90 active:brightness-75 file-annotation-button';
-          button.addEventListener('click', function () {
-            downloadFile(annotations);
-          });
-          const svgContainer = document.createElement('div');
-          svgContainer.className = 'ml-2';
-          svgContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>`;
+    if (props.category?.toUpperCase() === 'DATABASE' && props.message.indexOf('series') > 0) {
+      setIsCharts(true);
+    } else {
+      setIsCharts(false);
+      if (botMessageEl) {
+        // 判断如果是图标option的数据，展示echarts图表
+        botMessageEl.innerHTML = Marked.parse(props.message);
+        if (props.fileAnnotations && props.fileAnnotations.length) {
+          for (const annotations of props.fileAnnotations) {
+            const button = document.createElement('button');
+            button.textContent = annotations.fileName;
+            button.className =
+              'py-2 px-4 mb-2 justify-center font-semibold text-white focus:outline-none flex items-center disabled:opacity-50 disabled:cursor-not-allowed disabled:brightness-100 transition-all filter hover:brightness-90 active:brightness-75 file-annotation-button';
+            button.addEventListener('click', function () {
+              downloadFile(annotations);
+            });
+            const svgContainer = document.createElement('div');
+            svgContainer.className = 'ml-2';
+            svgContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>`;
 
-          button.appendChild(svgContainer);
-          botMessageEl.appendChild(button);
+            button.appendChild(svgContainer);
+            botMessageEl.appendChild(button);
+          }
         }
       }
     }
@@ -68,16 +77,20 @@ export const BotBubble = (props: Props) => {
       <Show when={props.showAvatar}>
         <Avatar initialAvatarSrc={props.avatarSrc} />
       </Show>
-      <span
-        ref={botMessageEl}
-        class="px-4 py-2 ml-2 whitespace-pre-wrap max-w-full chatbot-host-bubble"
-        data-testid="host-bubble"
-        style={{
-          'background-color': props.backgroundColor ?? defaultBackgroundColor,
-          color: props.textColor ?? defaultTextColor,
-          'border-radius': '6px',
-        }}
-      />
+      {isCharts() ? (
+        <ChartJsonComponent data={props.message} />
+      ) : (
+        <span
+          ref={botMessageEl}
+          class="px-4 py-2 ml-2 whitespace-pre-wrap max-w-full chatbot-host-bubble"
+          data-testid="host-bubble"
+          style={{
+            'background-color': props.backgroundColor ?? defaultBackgroundColor,
+            color: props.textColor ?? defaultTextColor,
+            'border-radius': '6px',
+          }}
+        />
+      )}
     </div>
   );
 };

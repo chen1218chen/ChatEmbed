@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My First Web Page</title>
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body>
+<script type="module"> 
+  import Chatbot from "./web.js"
+  Chatbot.initFull({
+    chatflowid: "23762c39-a4d5-49c9-bdfa-3c3c163e5a22",
+    apiHost: "http://localhost:3000",
+    category:"database"
+  })
+</script>
+<flowise-fullchatbot></flowise-fullchatbot>
+</body>
+</html>

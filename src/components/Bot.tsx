@@ -27,6 +27,7 @@ export type BotProps = {
   chatflowid: string;
   apiHost?: string;
   chatflowConfig?: Record<string, unknown>;
+  category?: string;
   welcomeMessage?: string;
   botMessage?: BotMessageTheme;
   userMessage?: UserMessageTheme;
@@ -344,7 +345,7 @@ export const Bot = (props: BotProps & { class?: string }) => {
       }
     }
 
-    const socket = socketIOClient(props.apiHost as string);
+    const socket: any = socketIOClient(props.apiHost as string);
 
     socket.on('connect', () => {
       setSocketIOClientId(socket.id);
@@ -397,7 +398,6 @@ export const Bot = (props: BotProps & { class?: string }) => {
     });
     return newSourceDocuments;
   };
-
   return (
     <>
       <div
@@ -431,6 +431,7 @@ export const Bot = (props: BotProps & { class?: string }) => {
                       textColor={props.botMessage?.textColor}
                       showAvatar={props.botMessage?.showAvatar}
                       avatarSrc={props.botMessage?.avatarSrc}
+                      category={props.category}
                     />
                   )}
                   {message.type === 'userMessage' && loading() && index() === messages().length - 1 && <LoadingBubble />}

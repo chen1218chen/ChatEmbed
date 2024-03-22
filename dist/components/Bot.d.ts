@@ -10,6 +10,7 @@ export type BotProps = {
     chatflowid: string;
     apiHost?: string;
     chatflowConfig?: Record<string, unknown>;
+    category?: string;
     welcomeMessage?: string;
     botMessage?: BotMessageTheme;
     userMessage?: UserMessageTheme;

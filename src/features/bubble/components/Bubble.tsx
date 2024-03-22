@@ -27,7 +27,6 @@ export const Bubble = (props: BubbleProps) => {
   const toggleBot = () => {
     isBotOpened() ? closeBot() : openBot();
   };
-
   return (
     <>
       <style>{styles}</style>
@@ -66,6 +65,7 @@ export const Bubble = (props: BubbleProps) => {
             chatflowid={props.chatflowid}
             chatflowConfig={props.chatflowConfig}
             apiHost={props.apiHost}
+            category={props.category}
           />
         </Show>
       </div>

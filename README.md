@@ -1,10 +1,8 @@
 <!-- markdownlint-disable MD030 -->
 
-# Flowise Embed
+# OneCityChains Embed
 
-Javascript library to display flowise chatbot on your website
-
-![Flowise](https://github.com/FlowiseAI/FlowiseChatEmbed/blob/main/images/ChatEmbed.gif?raw=true)
+Javascript library to display OneCityChains chatbot on your website
 
 Install:
 
@@ -30,10 +28,11 @@ yarn build
 
 ```html
 <script type="module">
-  import Chatbot from 'https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js';
+  import Chatbot from 'https://cdn.jsdelivr.net/gh/chen1218chen/FlowiseChatEmbed@latest/dist/web.js';
   Chatbot.init({
     chatflowid: '<chatflowid>',
     apiHost: 'http://localhost:3000',
+    category: 'database', //可选
   });
 </script>
 ```
@@ -46,6 +45,7 @@ yarn build
   Chatbot.initFull({
     chatflowid: '<chatflowid>',
     apiHost: 'http://localhost:3000',
+    category: 'database', //可选
   });
 </script>
 <flowise-fullchatbot></flowise-fullchatbot>
@@ -77,7 +77,7 @@ You can also customize chatbot with different configuration
 
 ```html
 <script type="module">
-  import Chatbot from 'https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js';
+  import Chatbot from 'https://cdn.jsdelivr.net/gh/chen1218chen/FlowiseChatEmbed@latest/dist/web.js';
   Chatbot.init({
     chatflowid: '91e9c803-5169-4db9-8207-3c0915d71c5f',
     apiHost: 'http://localhost:3000',
@@ -128,4 +128,4 @@ You can also customize chatbot with different configuration
 
 ## License
 
-Source code in this repository is made available under the [MIT License](https://github.com/FlowiseAI/Flowise/blob/master/LICENSE.md).
+Source code in this repository is made available under the [MIT License]
