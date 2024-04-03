@@ -1,3 +1,4 @@
+import './bootstrap.min.css';
 declare const chatbot: {
     initFull: (props: {
         chatflowid: string;

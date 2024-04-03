@@ -59,6 +59,7 @@ export const TextInput = (props: Props) => {
   };
 
   const handleChange = (value: any) => {
+    console.dir(value)
     setImageData(value);
   };
   const submitWhenEnter = (e: KeyboardEvent) => {
@@ -110,11 +111,9 @@ export const TextInput = (props: Props) => {
         >
           <span style={{ 'font-family': 'Poppins, sans-serif' }}>Send</span>
         </SendButton>
-        {props.category?.toUpperCase() === 'IMAGE' ? (
-          <ImageUploadButton class="my-2 ml-2" type="button" on:click={() => handleOpen()}></ImageUploadButton>
-        ) : null}
+        {props.category?.toUpperCase() === 'IMAGE' ? <ImageUploadButton class="my-2 ml-2" type="button" on:click={() => handleOpen()} /> : null}
       </div>
-      <UploadDialog show={isOpen()} handleClose={handleClose} onChange={handleChange}></UploadDialog>
+      <UploadDialog show={isOpen()} handleClose={handleClose} onChange={handleChange} />
       <Alert variant="danger" show={alertShow()}>
         请选择图片
       </Alert>

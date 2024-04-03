@@ -15,7 +15,10 @@ export const UploadDialog = (props: Props) => {
     event.preventDefault();
     event.stopPropagation();
     const form = event.currentTarget;
-    console.dir(form);
+    if(!validated()){
+      return;
+    }
+    // console.dir(form);
     if (key() === 'home') {
       const fileInput = document.querySelector('#fileUpload') as HTMLInputElement;
       const files = fileInput.files;
@@ -33,9 +36,13 @@ export const UploadDialog = (props: Props) => {
         reader.readAsDataURL(file);
         // uploadFile(file);
       }
-    } 
-    setValidated(true);
-    if(validated()){
+    } else {
+      props.onChange(imageData());
+    }
+    if (imageData() !== '') {
+      setValidated(true);
+    }
+    if (validated()) {
       props.handleClose();
     }
   };
@@ -44,8 +51,8 @@ export const UploadDialog = (props: Props) => {
     setKey(k);
     setImageData('');
     setValidated(false);
-    const url = document.getElementById('basic-url') as HTMLFormElement;
-    url.value = '';
+    // const url = document.getElementById('basic-url') as HTMLFormElement;
+    // url.value = '';
   };
   const handleSelect = (e: any) => {
     if (e.target.files.length === 1) {
@@ -87,42 +94,52 @@ export const UploadDialog = (props: Props) => {
   const handleUrlChange = (e: any) => {
     const value = e.currentTarget.value;
     setImageData(value);
-    props.onChange(value);
+    // props.onChange(value);
     setValidated(isURL(value.trim()));
     // console.log(isURL(imageData().trim()))
   };
+  const handleClose =()=>{
+    setImageData('');
+    setValidated(false)
+    props.handleClose()
+  }
   return (
     <>
-      <Modal show={props.show} onHide={props.handleClose} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+      <Modal show={props.show} onHide={handleClose} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">上传图片</Modal.Title>
         </Modal.Header>
-        <Form noValidate validated={validated()} onSubmit={handleSubmit}>
-          <Modal.Body>
-            {imageData() && imageData().length > 0 && <Image src={imageData()} fluid />}
-            <Tabs id="controlled-tab-example" activeKey={key()} onSelect={changeTab} class="mb-3">
-              <Tab eventKey="home" title="本地图片">
+
+        <Modal.Body>
+          {imageData() && imageData().length > 0 && <Image src={imageData()} fluid style={{'margin':'10px auto'}} />}
+          <Tabs id="controlled-tab-example" activeKey={key()} onSelect={changeTab} class="mb-3">
+            <Tab eventKey="home" title="本地图片">
+              <Form noValidate validated={validated()} onSubmit={handleSubmit}>
                 <Form.Group controlId="formFile" class="mb-3">
                   <Form.Label>选择要上传的本地图片</Form.Label>
-                  <Form.Control type="file" required id="fileUpload" value={imageData()} onChange={handleSelect} accept="image/*" />
+                  <Form.Control type="file" required id="fileUpload" onChange={handleSelect} accept="image/*" />
                   <Form.Control.Feedback type="invalid">请选择上传图片.</Form.Control.Feedback>
                 </Form.Group>
-              </Tab>
-              <Tab eventKey="online" title="在线图片">
-                <Form.Label htmlFor="basic-url">在线图片</Form.Label>
+                <Button type="submit" style={{"margin-right":'10px'}}>确定</Button>
+                <Button onClick={handleClose}>取消</Button>
+              </Form>
+            </Tab>
+            <Tab eventKey="online" title="在线图片">
+              <Form noValidate validated={validated()} onSubmit={handleSubmit}>
+                <Form.Label for="basic-url">在线图片</Form.Label>
                 <InputGroup class="mb-3">
                   {/* <InputGroup.Text id="basic-addon3">https://example.com/users/</InputGroup.Text> */}
                   <Form.Control id="basic-url" value={imageData()} aria-describedby="basic-addon3" onChange={handleUrlChange} />
                   <Form.Control.Feedback type="invalid">请出入在线图片地址，http://XXX/https://XXX</Form.Control.Feedback>
                 </InputGroup>
-              </Tab>
-            </Tabs>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button type="submit">确定</Button>
-            <Button onClick={props.handleClose}>Close</Button>
-          </Modal.Footer>
-        </Form>
+
+                <Button type="submit" style={{"margin-right":'10px'}}>确定</Button>
+                <Button onClick={handleClose}>取消</Button>
+              </Form>
+            </Tab>
+          </Tabs>
+        </Modal.Body>
+        <Modal.Footer></Modal.Footer>
       </Modal>
     </>
   );

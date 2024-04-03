@@ -420,6 +420,7 @@ export const Bot = (props: BotProps & { class?: string }) => {
                       textColor={props.userMessage?.textColor}
                       showAvatar={props.userMessage?.showAvatar}
                       avatarSrc={props.userMessage?.avatarSrc}
+                      category={props.category}
                     />
                   )}
                   {message.type === 'apiMessage' && (

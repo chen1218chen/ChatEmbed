@@ -4,6 +4,7 @@ type Props = {
     avatarSrc?: string;
     backgroundColor?: string;
     textColor?: string;
+    category?: string;
 };
 export declare const GuestBubble: (props: Props) => import("solid-js").JSX.Element;
 export {};

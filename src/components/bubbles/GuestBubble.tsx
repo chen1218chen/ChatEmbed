@@ -8,6 +8,7 @@ type Props = {
   avatarSrc?: string;
   backgroundColor?: string;
   textColor?: string;
+  category?: string;
 };
 
 const defaultBackgroundColor = '#3B81F6';
@@ -20,7 +21,16 @@ export const GuestBubble = (props: Props) => {
 
   onMount(() => {
     if (userMessageEl) {
-      userMessageEl.innerHTML = Marked.parse(props.message);
+      if(props.category?.toUpperCase() === 'IMAGE'){
+        const obj = JSON.parse(props.message)
+        const text = obj.text
+        const image = obj.image
+        const imageMD = '![](' + image + ')'
+        const result = imageMD + '<br />' + text
+        userMessageEl.innerHTML = Marked.parse(result);
+      }else{
+        userMessageEl.innerHTML = Marked.parse(props.message);
+      }
     }
   });
 
