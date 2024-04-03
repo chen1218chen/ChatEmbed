@@ -2,6 +2,8 @@ import styles from '../../../assets/index.css';
 import { Bot, BotProps } from '@/components/Bot';
 import { BubbleParams } from '@/features/bubble/types';
 import { createSignal, onCleanup, onMount, Show } from 'solid-js';
+import '../../../bootstrap.min.css';
+
 
 const defaultButtonColor = '#3B81F6';
 const defaultIconColor = 'white';

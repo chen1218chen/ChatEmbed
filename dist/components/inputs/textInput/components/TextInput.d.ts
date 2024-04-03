@@ -1,5 +1,6 @@
 type Props = {
     placeholder?: string;
+    category?: string;
     backgroundColor?: string;
     textColor?: string;
     sendButtonColor?: string;

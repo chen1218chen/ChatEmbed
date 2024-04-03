@@ -1,10 +1,13 @@
 import { ShortTextInput } from './ShortTextInput';
 import { isMobile } from '@/utils/isMobileSignal';
 import { createSignal, createEffect, onMount } from 'solid-js';
-import { SendButton } from '@/components/SendButton';
+import { SendButton, ImageUploadButton } from '@/components/SendButton';
+import { UploadDialog } from './UploadDialog';
+import { Alert } from 'solid-bootstrap';
 
 type Props = {
   placeholder?: string;
+  category?: string;
   backgroundColor?: string;
   textColor?: string;
   sendButtonColor?: string;
@@ -22,14 +25,42 @@ export const TextInput = (props: Props) => {
   let inputRef: HTMLInputElement | HTMLTextAreaElement | undefined;
 
   const handleInput = (inputValue: string) => setInputValue(inputValue);
-
+  const [imageData, setImageData] = createSignal('');
   const checkIfInputIsValid = () => inputValue() !== '' && inputRef?.reportValidity();
+  const [alertShow, setAlertShow] = createSignal(false);
 
   const submit = () => {
-    if (checkIfInputIsValid()) props.onSubmit(inputValue());
+    if (checkIfInputIsValid()) {
+      if (props.category?.toLocaleUpperCase() === 'IMAGE') {
+        if (imageData().length === 0) {
+          setAlertShow(true);
+          return;
+        }
+        const imageJson = {
+          image: imageData(),
+          text: inputValue(),
+        };
+        setInputValue(JSON.stringify(imageJson));
+      }
+      props.onSubmit(inputValue());
+    }
     setInputValue('');
+    setImageData('');
   };
 
+  const [isOpen, setIsOpen] = createSignal(false);
+  const handleOpen = () => {
+    console.log(true);
+    setIsOpen(true);
+  };
+  const handleClose = () => {
+    setIsOpen(false);
+    console.log('close===', isOpen());
+  };
+
+  const handleChange = (value: any) => {
+    setImageData(value);
+  };
   const submitWhenEnter = (e: KeyboardEvent) => {
     // Check if IME composition is in progress
     const isIMEComposition = e.isComposing || e.keyCode === 229;
@@ -45,39 +76,48 @@ export const TextInput = (props: Props) => {
   });
 
   return (
-    <div
-      class={'flex items-end justify-between chatbot-input'}
-      data-testid="input"
-      style={{
-        'border-top': '1px solid #eeeeee',
-        position: 'absolute',
-        left: '20px',
-        right: '20px',
-        bottom: '40px',
-        margin: 'auto',
-        'z-index': 1000,
-        'background-color': props.backgroundColor ?? defaultBackgroundColor,
-        color: props.textColor ?? defaultTextColor,
-      }}
-      onKeyDown={submitWhenEnter}
-    >
-      <ShortTextInput
-        ref={inputRef as HTMLInputElement}
-        onInput={handleInput}
-        value={inputValue()}
-        fontSize={props.fontSize}
-        disabled={props.disabled}
-        placeholder={props.placeholder ?? 'Type your question'}
-      />
-      <SendButton
-        sendButtonColor={props.sendButtonColor}
-        type="button"
-        isDisabled={props.disabled || inputValue() === ''}
-        class="my-2 ml-2"
-        on:click={submit}
+    <>
+      <div
+        class={'flex items-end justify-between chatbot-input'}
+        data-testid="input"
+        style={{
+          'border-top': '1px solid #eeeeee',
+          position: 'absolute',
+          left: '20px',
+          right: '20px',
+          bottom: '40px',
+          margin: 'auto',
+          'z-index': 1000,
+          'background-color': props.backgroundColor ?? defaultBackgroundColor,
+          color: props.textColor ?? defaultTextColor,
+        }}
+        onKeyDown={submitWhenEnter}
       >
-        <span style={{ 'font-family': 'Poppins, sans-serif' }}>Send</span>
-      </SendButton>
-    </div>
+        <ShortTextInput
+          ref={inputRef as HTMLInputElement}
+          onInput={handleInput}
+          value={inputValue()}
+          fontSize={props.fontSize}
+          disabled={props.disabled}
+          placeholder={props.placeholder ?? 'Type your question'}
+        />
+        <SendButton
+          sendButtonColor={props.sendButtonColor}
+          type="button"
+          isDisabled={props.disabled || inputValue() === ''}
+          class="my-2 ml-2"
+          on:click={submit}
+        >
+          <span style={{ 'font-family': 'Poppins, sans-serif' }}>Send</span>
+        </SendButton>
+        {props.category?.toUpperCase() === 'IMAGE' ? (
+          <ImageUploadButton class="my-2 ml-2" type="button" on:click={() => handleOpen()}></ImageUploadButton>
+        ) : null}
+      </div>
+      <UploadDialog show={isOpen()} handleClose={handleClose} onChange={handleChange}></UploadDialog>
+      <Alert variant="danger" show={alertShow()}>
+        请选择图片
+      </Alert>
+    </>
   );
 };
