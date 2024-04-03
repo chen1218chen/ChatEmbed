@@ -59,7 +59,7 @@ export const TextInput = (props: Props) => {
   };
 
   const handleChange = (value: any) => {
-    console.dir(value)
+    console.dir(value);
     setImageData(value);
   };
   const submitWhenEnter = (e: KeyboardEvent) => {

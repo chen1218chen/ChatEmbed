@@ -15,7 +15,7 @@ export const UploadDialog = (props: Props) => {
     event.preventDefault();
     event.stopPropagation();
     const form = event.currentTarget;
-    if(!validated()){
+    if (!validated()) {
       return;
     }
     // console.dir(form);
@@ -98,11 +98,11 @@ export const UploadDialog = (props: Props) => {
     setValidated(isURL(value.trim()));
     // console.log(isURL(imageData().trim()))
   };
-  const handleClose =()=>{
+  const handleClose = () => {
     setImageData('');
-    setValidated(false)
-    props.handleClose()
-  }
+    setValidated(false);
+    props.handleClose();
+  };
   return (
     <>
       <Modal show={props.show} onHide={handleClose} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
@@ -111,7 +111,7 @@ export const UploadDialog = (props: Props) => {
         </Modal.Header>
 
         <Modal.Body>
-          {imageData() && imageData().length > 0 && <Image src={imageData()} fluid style={{'margin':'10px auto'}} />}
+          {imageData() && imageData().length > 0 && <Image src={imageData()} fluid style={{ margin: '10px auto' }} />}
           <Tabs id="controlled-tab-example" activeKey={key()} onSelect={changeTab} class="mb-3">
             <Tab eventKey="home" title="本地图片">
               <Form noValidate validated={validated()} onSubmit={handleSubmit}>
@@ -120,7 +120,9 @@ export const UploadDialog = (props: Props) => {
                   <Form.Control type="file" required id="fileUpload" onChange={handleSelect} accept="image/*" />
                   <Form.Control.Feedback type="invalid">请选择上传图片.</Form.Control.Feedback>
                 </Form.Group>
-                <Button type="submit" style={{"margin-right":'10px'}}>确定</Button>
+                <Button type="submit" style={{ 'margin-right': '10px' }}>
+                  确定
+                </Button>
                 <Button onClick={handleClose}>取消</Button>
               </Form>
             </Tab>
@@ -133,13 +135,15 @@ export const UploadDialog = (props: Props) => {
                   <Form.Control.Feedback type="invalid">请出入在线图片地址，http://XXX/https://XXX</Form.Control.Feedback>
                 </InputGroup>
 
-                <Button type="submit" style={{"margin-right":'10px'}}>确定</Button>
+                <Button type="submit" style={{ 'margin-right': '10px' }}>
+                  确定
+                </Button>
                 <Button onClick={handleClose}>取消</Button>
               </Form>
             </Tab>
           </Tabs>
         </Modal.Body>
-        <Modal.Footer></Modal.Footer>
+        <Modal.Footer />
       </Modal>
     </>
   );

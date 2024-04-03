@@ -21,14 +21,14 @@ export const GuestBubble = (props: Props) => {
 
   onMount(() => {
     if (userMessageEl) {
-      if(props.category?.toUpperCase() === 'IMAGE'){
-        const obj = JSON.parse(props.message)
-        const text = obj.text
-        const image = obj.image
-        const imageMD = '![](' + image + ')'
-        const result = imageMD + '<br />' + text
+      if (props.category?.toUpperCase() === 'IMAGE') {
+        const obj = JSON.parse(props.message);
+        const text = obj.text;
+        const image = obj.image;
+        const imageMD = '![](' + image + ')';
+        const result = imageMD + '<br />' + text;
         userMessageEl.innerHTML = Marked.parse(result);
-      }else{
+      } else {
         userMessageEl.innerHTML = Marked.parse(props.message);
       }
     }
