@@ -5,7 +5,8 @@ export const UploadIcon = (props: JSX.SvgSVGAttributes<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     class="icon icon-tabler icon-tabler-photo-up"
     width="20"
-    style={{ fill: props.color ?? defaultButtonColor }} {...props}
+    style={{ fill: props.color ?? defaultButtonColor }}
+    {...props}
     height="20"
     viewBox="0 0 24 24"
     stroke-width="2"
