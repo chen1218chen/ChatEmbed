@@ -48,7 +48,7 @@ yarn build
     category: 'database', //可选
   });
 </script>
-<flowise-fullchatbot></flowise-fullchatbot>
+<onecitychains-fullchatbot></onecitychains-fullchatbot>
 ```
 
 To enable full screen, add `margin: 0` to <code>body</code> style, and confirm you don't set height and width
@@ -94,7 +94,7 @@ You can also customize chatbot with different configuration
         customIconSrc: 'https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg',
       },
       chatWindow: {
-        title: 'Flowise Bot',
+        title: 'Chat Bot',
         titleAvatarSrc: 'https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg',
         welcomeMessage: 'Hello! This is custom welcome message',
         backgroundColor: '#ffffff',
@@ -129,3 +129,8 @@ You can also customize chatbot with different configuration
 ## License
 
 Source code in this repository is made available under the [MIT License]
+
+## 版本
+
+- 1.0.3 增加图表可视化的功能
+- 1.0.4 增加图片分析功能，支持在线图片和上传图片

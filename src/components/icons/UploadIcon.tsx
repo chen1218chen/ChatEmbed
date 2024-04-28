@@ -1,10 +1,11 @@
-// import { JSX } from 'solid-js/jsx-runtime';
-// const defaultButtonColor = '#3B81F6';
-export const UploadIcon = () => (
+import { JSX } from 'solid-js/jsx-runtime';
+const defaultButtonColor = '#3B81F6';
+export const UploadIcon = (props: JSX.SvgSVGAttributes<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     class="icon icon-tabler icon-tabler-photo-up"
     width="20"
+    style={{ fill: props.color ?? defaultButtonColor }} {...props}
     height="20"
     viewBox="0 0 24 24"
     stroke-width="2"

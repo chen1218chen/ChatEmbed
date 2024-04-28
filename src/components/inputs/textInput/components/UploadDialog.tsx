@@ -14,7 +14,7 @@ export const UploadDialog = (props: Props) => {
   const handleSubmit = async (event: SubmitEvent) => {
     event.preventDefault();
     event.stopPropagation();
-    const form = event.currentTarget;
+    // const form = event.currentTarget;
     if (!validated()) {
       return;
     }

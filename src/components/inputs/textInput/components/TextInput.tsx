@@ -1,7 +1,7 @@
 import { ShortTextInput } from './ShortTextInput';
 import { isMobile } from '@/utils/isMobileSignal';
 import { createSignal, createEffect, onMount } from 'solid-js';
-import { SendButton, ImageUploadButton } from '@/components/SendButton';
+import { SendButton, ImageUploadButton } from '@/components/buttons/SendButton';
 import { UploadDialog } from './UploadDialog';
 import { Alert } from 'solid-bootstrap';
 
