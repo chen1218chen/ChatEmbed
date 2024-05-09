@@ -50,12 +50,11 @@ export const TextInput = (props: Props) => {
 
   const [isOpen, setIsOpen] = createSignal(false);
   const handleOpen = () => {
-    console.log(true);
     setIsOpen(true);
   };
   const handleClose = () => {
     setIsOpen(false);
-    console.log('close===', isOpen());
+    // console.log('close===', isOpen());
   };
 
   const handleChange = (value: any) => {
