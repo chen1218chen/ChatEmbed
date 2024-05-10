@@ -28,7 +28,7 @@ yarn build
 
 ```html
 <script type="module">
-  import Chatbot from 'https://cdn.jsdelivr.net/gh/chen1218chen/FlowiseChatEmbed@latest/dist/web.js';
+  import Chatbot from 'https://192.168.100.85:3009/api/v1/fileJavascript/cdn/ChatEmbed/latest/web.js';
   Chatbot.init({
     chatflowid: '<chatflowid>',
     apiHost: 'http://localhost:3000',
@@ -77,7 +77,7 @@ You can also customize chatbot with different configuration
 
 ```html
 <script type="module">
-  import Chatbot from 'https://cdn.jsdelivr.net/gh/chen1218chen/FlowiseChatEmbed@latest/dist/web.js';
+  import Chatbot from 'https://192.168.100.85:3009/api/v1/fileJavascript/cdn/ChatEmbed/latest/web.js';
   Chatbot.init({
     chatflowid: '91e9c803-5169-4db9-8207-3c0915d71c5f',
     apiHost: 'http://localhost:3000',
