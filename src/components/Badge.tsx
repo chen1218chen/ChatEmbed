@@ -5,6 +5,7 @@ type Props = {
   poweredByTextColor?: string;
   badgeBackgroundColor?: string;
   poweredByText?: string;
+  poweredByUrl?: string;
 };
 
 const defaultTextColor = '#303235';
@@ -36,7 +37,7 @@ export const Badge = (props: Props) => {
   onCleanup(() => {
     if (observer) observer.disconnect();
   });
-
+  console.log(props);
   return (
     <span
       style={{
@@ -51,19 +52,18 @@ export const Badge = (props: Props) => {
         'background-color': props.badgeBackgroundColor ?? '#ffffff',
       }}
     >
-      <span style={{ 'font-weight': 'bold', color: props.poweredByTextColor ?? defaultTextColor }}>{props.poweredByText}</span>
-      {/* Powered by
+      {/* <span style={{ 'font-weight': 'bold', color: props.poweredByTextColor ?? defaultTextColor }}>{props.poweredByText}</span> */}
       <a
         ref={liteBadge}
-        href={'https://flowiseai.com'}
+        href={props.poweredByUrl ?? '#'}
         target="_blank"
         rel="noopener noreferrer"
         class="lite-badge"
         id="lite-badge"
         style={{ 'font-weight': 'bold', color: props.poweredByTextColor ?? defaultTextColor }}
       >
-        <span> Flowise</span>
-      </a> */}
+        <span>{props.poweredByText}</span>
+      </a>
     </span>
   );
 };

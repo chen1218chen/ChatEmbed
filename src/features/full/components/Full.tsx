@@ -48,6 +48,7 @@ export const Full = (props: FullProps, { element }: { element: HTMLElement }) =>
             welcomeMessage={props.theme?.chatWindow?.welcomeMessage}
             poweredByTextColor={props.theme?.chatWindow?.poweredByTextColor}
             poweredByText={props.theme?.chatWindow?.poweredByText}
+            poweredByUrl={props.theme?.chatWindow?.poweredByUrl}
             textInput={props.theme?.chatWindow?.textInput}
             botMessage={props.theme?.chatWindow?.botMessage}
             userMessage={props.theme?.chatWindow?.userMessage}

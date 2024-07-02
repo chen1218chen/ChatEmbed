@@ -3,6 +3,7 @@ type Props = {
     poweredByTextColor?: string;
     badgeBackgroundColor?: string;
     poweredByText?: string;
+    poweredByUrl?: string;
 };
 export declare const Badge: (props: Props) => import("solid-js").JSX.Element;
 export {};

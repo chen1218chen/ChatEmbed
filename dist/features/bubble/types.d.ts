@@ -36,6 +36,7 @@ export type ChatWindowTheme = {
     textInput?: TextInputTheme;
     poweredByTextColor?: string;
     poweredByText?: string;
+    poweredByUrl?: string;
 };
 export type ButtonTheme = {
     size?: 'medium' | 'large';
