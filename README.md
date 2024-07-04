@@ -134,4 +134,4 @@ Source code in this repository is made available under the [MIT License]
 
 - 1.0.3 增加图表可视化的功能
 - 1.0.4 增加图片分析功能，支持在线图片和上传图片
-- 1.0.7 增加poweredByUrl参数 
+- 1.0.7 增加poweredByUrl参数

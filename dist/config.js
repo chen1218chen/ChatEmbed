@@ -1,1 +1,0 @@
-window.chatbot.url="https://lite.ai"
