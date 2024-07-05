@@ -9,13 +9,13 @@
 <script type="module"> 
 
 import Chatbot from "./web.js"
-  Chatbot.initFull({
+  Chatbot.init({
     chatflowid: "bc3f3d19-299a-440a-a6aa-e2eae4cfddc9",
     apiHost: "http://localhost:3000",
     theme: {
             button: {
                 backgroundColor: "#3B81F6",
-                right: 20,
+                right: 200,
                 bottom: 20,
                 size: "medium",
                 iconColor: "white",
@@ -26,6 +26,8 @@ import Chatbot from "./web.js"
                 welcomeMessage: "Hello! This is custom welcome message",
                 backgroundColor: "#ffffff",
                 fontSize: 16,
+                height: 700,
+                width: 500,
                 poweredByTextColor: "#303235",
                 poweredByText:"Powered By",
                 poweredByUrl:"https://www.baidu.com",
@@ -51,6 +53,5 @@ import Chatbot from "./web.js"
         }
   })
 </script>
-<onecitychains-fullchatbot></onecitychains-fullchatbot>
 </body>
 </html>

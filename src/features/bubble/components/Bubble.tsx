@@ -27,6 +27,7 @@ export const Bubble = (props: BubbleProps) => {
   const toggleBot = () => {
     isBotOpened() ? closeBot() : openBot();
   };
+  // class -fixed sm:right-5 rounded-lg w-full sm:w-[400px] max-h-[704px]
   return (
     <>
       <style>{styles}</style>
@@ -35,15 +36,17 @@ export const Bubble = (props: BubbleProps) => {
         part="bot"
         style={{
           height: bubbleProps.theme?.chatWindow?.height ? `${bubbleProps.theme?.chatWindow?.height.toString()}px` : 'calc(100% - 100px)',
+          width: bubbleProps.theme?.chatWindow?.width ? `${bubbleProps.theme?.chatWindow?.width.toString()}px` : 'calc(100% - 100px)',
           transition: 'transform 200ms cubic-bezier(0, 1.2, 1, 1), opacity 150ms ease-out',
           'transform-origin': 'bottom right',
           transform: isBotOpened() ? 'scale3d(1, 1, 1)' : 'scale3d(0, 0, 1)',
           'box-shadow': 'rgb(0 0 0 / 16%) 0px 5px 40px',
           'background-color': bubbleProps.theme?.chatWindow?.backgroundColor || '#ffffff',
           'z-index': 42424242,
+          right: bubbleProps.theme?.button?.right ? `${bubbleProps.theme?.button?.right.toString()}px` : '20px',
         }}
         class={
-          `fixed sm:right-5 rounded-lg w-full sm:w-[400px] max-h-[704px]` +
+          `fixed sm:right-6 rounded-lg w-full` +
           (isBotOpened() ? ' opacity-1' : ' opacity-0 pointer-events-none') +
           (props.theme?.button?.size === 'large' ? ' bottom-24' : ' bottom-20')
         }
