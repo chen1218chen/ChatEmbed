@@ -21,13 +21,25 @@ export const sendRequest = async <ResponseData>(
     const response = await fetch(url, {
       method: typeof params === 'string' ? 'GET' : params.method,
       mode: 'cors',
-      headers:
-        typeof params !== 'string' && isDefined(params.body)
-          ? {
-              'Content-Type': 'application/json',
-            }
-          : undefined,
-      body: typeof params !== 'string' && isDefined(params.body) ? JSON.stringify(params.body) : undefined,
+      // headers:
+      //   typeof params !== 'string' && isDefined(params.body)
+      //     ? {
+      //       'Content-Type': 'application/json',
+      //       // 'Authorization': 'Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwidGVuYW50SWQiOiIyYTc2NWU4ZC03NTc1LTQ5MGQtYjg5NC1mM2EyZGNkNDA0YWUiLCJyb2xlcyI6WyJTVVBFUl9BRE1JTiJdLCJpYXQiOjE3MjEzNTI0MzMsImV4cCI6MTcyMTM1OTYzM30.24X3mY3-ha97a68P3dCB1GfS4lC3aGzyc-aIC9wrFc0"
+      //       }
+      //     : undefined,
+          headers:
+          typeof params !== 'string' && isDefined(params.body) && !(params.body instanceof FormData)
+            ? {
+                'Content-Type': 'application/json',
+              }
+            : undefined,     
+      // body: typeof params !== 'string' && isDefined(params.body) ? JSON.stringify(params.body) : undefined,
+      body: typeof params !== 'string' && isDefined(params.body)
+        ? params.body instanceof FormData
+          ? params.body
+          : JSON.stringify(params.body)
+        : undefined,
     });
     let data: any;
     const contentType = response.headers.get('Content-Type');

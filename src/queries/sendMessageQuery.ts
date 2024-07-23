@@ -15,6 +15,7 @@ export type MessageRequest = {
   apiHost?: string;
   body?: IncomingInput;
   cityName?: string;
+  formData?: FormData;
 };
 
 // export const sendMessageQuery = ({ chatflowid, apiHost = 'http://localhost:3000', body }: MessageRequest) =>
@@ -54,4 +55,10 @@ export const getGeoDataApi = ({ apiHost = 'http://localhost:3000', cityName }: M
   sendRequest<any>({
     method: 'GET',
     url: `${apiHost}/api/v1/area?name=${cityName}`,
+  });
+export const uploadMessageFiles = ({ apiHost = 'http://localhost:3000', formData }: MessageRequest) =>
+  sendRequest<any>({
+    method: 'POST',
+    url: `${apiHost}/api/v1/file/share`,
+    body:formData
   });

@@ -516,6 +516,7 @@ export const Bot = (props: BotProps & { class?: string }) => {
             disabled={loading()}
             defaultValue={userInput()}
             onSubmit={handleSubmit}
+            apiHost={props.apiHost}
           />
         </div>
         <Show when={messages().length === 1}>

@@ -14,6 +14,7 @@ type Props = {
   defaultValue?: string;
   fontSize?: number;
   disabled?: boolean;
+  apiHost?: string;
   onSubmit: (value: string) => void;
 };
 
@@ -36,11 +37,11 @@ export const TextInput = (props: Props) => {
           setAlertShow(true);
           return;
         }
-        const imageJson = {
-          image: imageData(),
-          text: inputValue(),
-        };
-        setInputValue(JSON.stringify(imageJson));
+
+        const imageString = imageData() + inputValue()
+        setInputValue(imageString);
+      }else if(props.category?.toLocaleUpperCase() === 'SUMMARIZE'){
+        console.log("==================","SUMMARIZE")
       }
       props.onSubmit(inputValue());
     }
@@ -112,7 +113,7 @@ export const TextInput = (props: Props) => {
         </SendButton>
         {props.category?.toUpperCase() === 'IMAGE' ? <ImageUploadButton class="my-2 ml-2" type="button" on:click={() => handleOpen()} /> : null}
       </div>
-      <UploadDialog show={isOpen()} handleClose={handleClose} onChange={handleChange} />
+      <UploadDialog show={isOpen()} handleClose={handleClose} onChange={handleChange} apiHost={props.apiHost} />
       <Alert variant="danger" show={alertShow()}>
         请选择图片
       </Alert>

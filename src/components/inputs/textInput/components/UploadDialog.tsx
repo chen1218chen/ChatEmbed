@@ -1,15 +1,18 @@
 import { Form, Button, Modal, Tabs, Tab, InputGroup, Image } from 'solid-bootstrap';
 import { createSignal } from 'solid-js';
 // import { JSX } from 'solid-js/jsx-runtime';
+import { uploadMessageFiles} from '@/queries/sendMessageQuery';
 
 type Props = {
   show: boolean;
+  apiHost?: string;
   handleClose: () => void;
   onChange: (value: any) => void;
 };
 export const UploadDialog = (props: Props) => {
   const [validated, setValidated] = createSignal(false);
   const [imageData, setImageData] = createSignal('');
+  const [imagePreviewUrl, setImagePreviewUrl] = createSignal('');
   const [key, setKey] = createSignal('home');
   const handleSubmit = async (event: SubmitEvent) => {
     event.preventDefault();
@@ -20,22 +23,23 @@ export const UploadDialog = (props: Props) => {
     }
     // console.dir(form);
     if (key() === 'home') {
-      const fileInput = document.querySelector('#fileUpload') as HTMLInputElement;
-      const files = fileInput.files;
-      if (files && files.length === 1) {
-        const file = files[0];
-        const reader = new FileReader();
-        reader.onload = (evt) => {
-          if (!evt?.target?.result) {
-            return;
-          }
-          const { result } = evt.target;
-          props.onChange(result);
-          setImageData(result.toString());
-        };
-        reader.readAsDataURL(file);
-        // uploadFile(file);
-      }
+      // const fileInput = document.querySelector('#fileUpload') as HTMLInputElement;
+      // const files = fileInput.files;
+      // if (files && files.length === 1) {
+      //   const file = files[0];
+      //   const reader = new FileReader();
+      //   reader.onload = (evt) => {
+      //     if (!evt?.target?.result) {
+      //       return;
+      //     }
+      //     const { result } = evt.target;
+      //     props.onChange(result);
+      //     setImageData(result.toString());
+      //   };
+      //   reader.readAsDataURL(file);
+      //   // uploadFile(file);
+      // }
+      props.onChange(imageData());
     } else {
       props.onChange(imageData());
     }
@@ -50,27 +54,48 @@ export const UploadDialog = (props: Props) => {
   const changeTab = (k: string | any) => {
     setKey(k);
     setImageData('');
+    setImagePreviewUrl('');
     setValidated(false);
     // const url = document.getElementById('basic-url') as HTMLFormElement;
     // url.value = '';
   };
-  const handleSelect = (e: any) => {
+  // const handleSelect = (e: any) => {
+  //   if (e.target.files.length === 1) {
+  //     const file = e.target.files[0];
+  //     const reader = new FileReader();
+  //     reader.onload = (evt) => {
+  //       if (!evt?.target?.result) {
+  //         return;
+  //       }
+  //       const { result } = evt.target;
+  //       props.onChange(result);
+  //       setImageData(result.toString());
+  //     };
+  //     reader.readAsDataURL(file);
+  //     setValidated(true);
+  //   }
+  // };
+ const handleSelect = async(e: any) => {
+    const fileInput = document.querySelector('#fileUpload') as HTMLInputElement;
+    const files = fileInput.files as FileList;
     if (e.target.files.length === 1) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onload = (evt) => {
-        if (!evt?.target?.result) {
-          return;
-        }
-        const { result } = evt.target;
-        props.onChange(result);
-        setImageData(result.toString());
-      };
-      reader.readAsDataURL(file);
+      // setImagePreviewUrl(URL.createObjectURL(file));
+      //获取文件进行接口上传，返回图片地址
+      const file = files[0];
+      const formData = new FormData()
+      formData.append('files', file, encodeURIComponent(file.name))
+      const response = await uploadMessageFiles({
+          apiHost: props.apiHost,
+          formData:formData
+      })
+      if (response.data) {
+          const dataUrl = response.data[0].split('?')[0]
+          setImageData(`<img>${props.apiHost}/api/v1/file/${dataUrl}</img>`)
+          setImagePreviewUrl(`${props.apiHost}/api/v1/file/${dataUrl}`)
+      }
       setValidated(true);
     }
   };
-
   // 验证url是否正确
   const isURL = (url: string) => {
     const strRegex =
@@ -100,6 +125,7 @@ export const UploadDialog = (props: Props) => {
   };
   const handleClose = () => {
     setImageData('');
+    setImagePreviewUrl('');
     setValidated(false);
     props.handleClose();
   };
@@ -111,7 +137,7 @@ export const UploadDialog = (props: Props) => {
         </Modal.Header>
 
         <Modal.Body>
-          {imageData() && imageData().length > 0 && <Image src={imageData()} fluid style={{ margin: '10px auto' }} />}
+          {imagePreviewUrl() && imagePreviewUrl().length > 0 && <Image src={imagePreviewUrl()} fluid style={{ margin: '10px auto' }} />}
           <Tabs id="controlled-tab-example" activeKey={key()} onSelect={changeTab} class="mb-3">
             <Tab eventKey="home" title="本地图片">
               <Form noValidate validated={validated()} onSubmit={handleSubmit}>
