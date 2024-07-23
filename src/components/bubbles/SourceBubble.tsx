@@ -1,4 +1,5 @@
 type Props = {
+  index: number;
   pageContent: string;
   metadata: object;
   onSourceClick?: () => void;
@@ -12,12 +13,13 @@ export const SourceBubble = (props: Props) => (
       onClick={() => props.onSourceClick?.()}
     >
       <span
+        title={props.pageContent}
         class="px-2 py-1 ml-1 whitespace-pre-wrap max-w-full chatbot-host-bubble"
         data-testid="host-bubble"
         style={{
           width: 'max-content',
-          'max-width': '80px',
-          'font-size': '13px',
+          'max-width': '600px',
+          'font-size': '14px',
           'border-radius': '15px',
           cursor: 'pointer',
           'text-overflow': 'ellipsis',
@@ -25,6 +27,7 @@ export const SourceBubble = (props: Props) => (
           'white-space': 'nowrap',
         }}
       >
+        <span>{props?.index + 1 + ' '}.</span>
         {props.pageContent}
       </span>
     </div>

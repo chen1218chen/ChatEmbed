@@ -14,9 +14,16 @@ export type MessageRequest = {
   chatflowid?: string;
   apiHost?: string;
   body?: IncomingInput;
+  cityName?: string;
 };
 
-export const sendMessageQuery = ({ chatflowid, apiHost = 'http://localhost:3000', body }: MessageRequest) =>
+// export const sendMessageQuery = ({ chatflowid, apiHost = 'http://localhost:3000', body }: MessageRequest) =>
+//   sendRequest<any>({
+//     method: 'POST',
+//     url: `${apiHost}/api/v1/internal-prediction/${chatflowid}`,
+//     body,
+//   });
+  export const sendMessageQuery = ({ chatflowid, apiHost = 'http://localhost:3000', body }: MessageRequest) =>
   sendRequest<any>({
     method: 'POST',
     url: `${apiHost}/api/v1/prediction/${chatflowid}`,
@@ -41,4 +48,10 @@ export const sendFileDownloadQuery = ({ apiHost = 'http://localhost:3000', body 
     url: `${apiHost}/api/v1/openai-assistants-file`,
     body,
     type: 'blob',
+  });
+
+export const getGeoDataApi = ({ apiHost = 'http://localhost:3000', cityName }: MessageRequest) =>
+  sendRequest<any>({
+    method: 'GET',
+    url: `${apiHost}/api/v1/area?name=${cityName}`,
   });

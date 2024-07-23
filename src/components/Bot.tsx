@@ -254,7 +254,7 @@ export const Bot = (props: BotProps & { class?: string }) => {
       if (!isChatFlowAvailableToStream()) {
         let text = '';
         if (data.text) text = data.text;
-        else if (data.json) text = JSON.stringify(data.json, null, 2);
+        else if (data.json) text = '```json\n' + JSON.stringify(data.json, null, 2)
         else text = JSON.stringify(data, null, 2);
 
         setMessages((prevMessages) => {
@@ -442,12 +442,14 @@ export const Bot = (props: BotProps & { class?: string }) => {
                   )}
                   {message.type === 'userMessage' && loading() && index() === messages().length - 1 && <LoadingBubble />}
                   {message.sourceDocuments && message.sourceDocuments.length && (
-                    <div style={{ display: 'flex', 'flex-direction': 'row', width: '100%' }}>
+                    <div style={{ display: 'flex', 'flex-direction': 'column', width: '100%', 'margin-top': '10px', 'margin-left': '10px' }}>
+                      {message.sourceDocuments.length > 0 && <div style={{ "font-size": '14px'}}>共{` ${message.sourceDocuments.length} `}条</div>}
                       <For each={[...removeDuplicateURL(message)]}>
-                        {(src) => {
+                        {(src, index) => {
                           const URL = isValidURL(src.metadata.source);
                           return (
                             <SourceBubble
+                              index={index()}
                               pageContent={URL ? URL.pathname : src.pageContent}
                               metadata={src.metadata}
                               onSourceClick={() => {

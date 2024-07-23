@@ -66,6 +66,7 @@ const configs = [
       file: 'dist/web.js',
       format: 'es',
       sourcemap: true,
+      inlineDynamicImports: true,
       // banner: Global
     },
   },

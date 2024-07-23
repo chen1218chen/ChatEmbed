@@ -42,7 +42,8 @@ export const Popup = (props: PopupProps) => {
 
   onMount(() => {
     if (preEl) {
-      preEl.innerHTML = syntaxHighlight(JSON.stringify(props?.value, undefined, 2));
+      // preEl.innerHTML = syntaxHighlight(JSON.stringify(props?.value, undefined, 2));
+      preEl.innerHTML = `<div style="font-size: 18px; padding-bottom: 10px; ">引用原文</div><span style="font-size: 16px; padding-bottom: 10px; ">文件名称：</span>${props?.value.metadata.filename}<div style="font-size: 16px; padding-bottom: 10px; ">文件内容：</div><span>${props?.value.pageContent}</span>`;
     }
   });
 
