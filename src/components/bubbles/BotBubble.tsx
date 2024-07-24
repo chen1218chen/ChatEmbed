@@ -100,7 +100,7 @@ export const BotBubble = (props: Props) => {
       if (node.nodeType === Node.ELEMENT_NODE) {
         const element = node as HTMLElement;
         // console.log('element', element);
-        if (element.dataset.code) {
+        if (isChart() && element.dataset.code) {
           return <ChartJsonComponent  data={element.dataset.code} />;
         } else if (element.dataset.video) {
           return <VideoComponent  src={element.dataset.video} />;
@@ -124,7 +124,10 @@ export const BotBubble = (props: Props) => {
   };
   const hasHTML = (str: string) => {
     return /<[a-z][\s\S]*>/i.test(str)
-}
+  }
+  const isChart = () => {
+    return props.category?.toUpperCase() === 'DATABASE' || props.category?.toUpperCase() === 'KNOWLEDGE-DATABASE' && props.message.indexOf('series') > 0
+  }
   const formatStr = (message:any) => {
     try {
         if (hasHTML(message) && _.includes(message, '<html>') && !_.includes(message, '```html')) {
@@ -162,7 +165,7 @@ export const BotBubble = (props: Props) => {
     } catch (error) {
         console.error(error)
     }
-}
+  }
   // onMount(() => {
   //   if (props.category?.toUpperCase() === 'DATABASE' || props.category?.toUpperCase() === 'KNOWLEDGE-DATABASE' && props.message.indexOf('series') > 0) {
   //     setIsCharts(true);
@@ -194,7 +197,7 @@ export const BotBubble = (props: Props) => {
   onMount(() => {
     if (botMessageEl) {
       // 判断如果是图标option的数据，展示echarts图表
-      botMessageEl.innerHTML = marked.parse(formatStr(props.message)) as string;
+      // botMessageEl.innerHTML = marked.parse(formatStr(bbb[1].content)) as string;
       if (props.fileAnnotations && props.fileAnnotations.length) {
         for (const annotations of props.fileAnnotations) {
           const button = document.createElement('button');

@@ -228,7 +228,7 @@ export const ChartJsonComponent = (props: Props) => {
         }
       }
     }
-    chart = echarts.init(chartRef);
+    chart = echarts.init(chartRef,'shine');
     chart.setOption(optionsData);
     // window.addEventListener("resize", () => chart?.resize())
   });
