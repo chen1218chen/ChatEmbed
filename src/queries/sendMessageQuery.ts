@@ -8,6 +8,7 @@ export type IncomingInput = {
   socketIOClientId?: string;
   chatId?: string;
   fileName?: string; // Only for assistant
+  file?: string; // Only for assistant
 };
 
 export type MessageRequest = {
@@ -57,6 +58,12 @@ export const getGeoDataApi = ({ apiHost = 'http://localhost:3000', cityName }: M
     url: `${apiHost}/api/v1/area?name=${cityName}`,
   });
 export const uploadMessageFiles = ({ apiHost = 'http://localhost:3000', formData }: MessageRequest) =>
+  sendRequest<any>({
+    method: 'POST',
+    url: `${apiHost}/api/v1/file/share`,
+    body:formData
+  });
+  export const uploadCommonFiles = ({ apiHost = 'http://localhost:3000', formData }: MessageRequest) =>
   sendRequest<any>({
     method: 'POST',
     url: `${apiHost}/api/v1/file/share`,

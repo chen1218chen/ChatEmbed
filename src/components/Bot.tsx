@@ -206,11 +206,16 @@ export const Bot = (props: BotProps & { class?: string }) => {
   };
 
   const promptClick = (prompt: string) => {
-    handleSubmit(prompt);
+    handleSubmit({
+      value: prompt,
+    });
   };
 
   // Handle form submission
-  const handleSubmit = async (value: string) => {
+  const handleSubmit = async ({value,file}:{
+    value: string;
+    file?: any;
+  }) => {
     setUserInput(value);
 
     if (value.trim() === '') {
@@ -239,6 +244,9 @@ export const Bot = (props: BotProps & { class?: string }) => {
       chatId: chatId(),
     };
 
+    if (props.category === 'SUMMARIZE' && file?.name && file?.bucket) {
+      body.overrideConfig = { keyName: file.name, bucketName: file.bucket };
+    }
     if (props.chatflowConfig) body.overrideConfig = props.chatflowConfig;
 
     if (isChatFlowAvailableToStream()) body.socketIOClientId = socketIOClientId();

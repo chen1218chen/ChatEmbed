@@ -1,8 +1,10 @@
 import { ShortTextInput } from './ShortTextInput';
 import { isMobile } from '@/utils/isMobileSignal';
 import { createSignal, createEffect, onMount } from 'solid-js';
-import { SendButton, ImageUploadButton } from '@/components/buttons/SendButton';
+import { SendButton, ImageUploadButton} from '@/components/buttons/SendButton';
+import { FileUploadButton } from '@/components/buttons/FileUploadButton';
 import { UploadDialog } from './UploadDialog';
+import { UploadFileDialog } from './UploadFileDialog';
 import { Alert } from 'solid-bootstrap';
 
 type Props = {
@@ -15,18 +17,19 @@ type Props = {
   fontSize?: number;
   disabled?: boolean;
   apiHost?: string;
-  onSubmit: (value: string) => void;
+  onSubmit: ({value, file}: {value: string, file?: FileInfo | string}) => void;
 };
 
 const defaultBackgroundColor = '#ffffff';
 const defaultTextColor = '#303235';
-
+type FileInfo = { bucket: string; name: string; url?: string };
 export const TextInput = (props: Props) => {
   const [inputValue, setInputValue] = createSignal(props.defaultValue ?? '');
   let inputRef: HTMLInputElement | HTMLTextAreaElement | undefined;
 
   const handleInput = (inputValue: string) => setInputValue(inputValue);
   const [imageData, setImageData] = createSignal('');
+  const [fileData, setFileData] = createSignal<FileInfo | string>('');;
   const checkIfInputIsValid = () => inputValue() !== '' && inputRef?.reportValidity();
   const [alertShow, setAlertShow] = createSignal(false);
 
@@ -38,18 +41,33 @@ export const TextInput = (props: Props) => {
           return;
         }
 
-        const imageString = imageData() + inputValue()
+        const imageString = imageData() + inputValue();
         setInputValue(imageString);
-      }else if(props.category?.toLocaleUpperCase() === 'SUMMARIZE'){
-        console.log("==================","SUMMARIZE")
+        props.onSubmit({
+          value: inputValue(),
+        });
+      } else if (props.category?.toLocaleUpperCase() === 'SUMMARIZE') {
+        // console.log('==================', 'SUMMARIZE');
+        const fileParams = fileData() as FileInfo;
+        const fileInfo: FileInfo = {
+          bucket: fileParams.bucket,
+          name: fileParams.name,
+        };
+        props.onSubmit({ value: inputValue(), file: fileInfo });
+      } else {
+        props.onSubmit({
+          value: inputValue(),
+        });
       }
-      props.onSubmit(inputValue());
     }
     setInputValue('');
     setImageData('');
   };
 
   const [isOpen, setIsOpen] = createSignal(false);
+  const [isFileOpen, setIsFileOpen] = createSignal(false);
+  // TODO: unify image file upload 
+
   const handleOpen = () => {
     setIsOpen(true);
   };
@@ -62,6 +80,17 @@ export const TextInput = (props: Props) => {
     console.dir(value);
     setImageData(value);
   };
+  // 文件上传操作
+  const handleFileOpen = () => {
+    setIsFileOpen(true);
+  }
+  const handleFileClose = () => {
+    setIsFileOpen(false);
+  }
+  const handleFileChange = (value: any) => {
+    console.dir(value);
+    setFileData(value);
+  }
   const submitWhenEnter = (e: KeyboardEvent) => {
     // Check if IME composition is in progress
     const isIMEComposition = e.isComposing || e.keyCode === 229;
@@ -111,9 +140,11 @@ export const TextInput = (props: Props) => {
         >
           <span style={{ 'font-family': 'Poppins, sans-serif' }}>Send</span>
         </SendButton>
+        {props.category?.toUpperCase() === 'SUMMARIZE' ? <FileUploadButton class="my-2 ml-2" type="button" on:click={() => handleFileOpen()} /> : null}
         {props.category?.toUpperCase() === 'IMAGE' ? <ImageUploadButton class="my-2 ml-2" type="button" on:click={() => handleOpen()} /> : null}
       </div>
       <UploadDialog show={isOpen()} handleClose={handleClose} onChange={handleChange} apiHost={props.apiHost} />
+      <UploadFileDialog show={isFileOpen()} handleClose={handleFileClose} onChange={handleFileChange} apiHost={props.apiHost} />
       <Alert variant="danger" show={alertShow()}>
         请选择图片
       </Alert>
