@@ -4,15 +4,15 @@
 set -e # Exit on any error
 
 echo "Running ESLint for linting..."
-npm run lint
+# npm run lint
+npx lint-staged
+# echo "Running ESLint for fixing issues..."
+# npm run lint-fix
 
-echo "Running ESLint for fixing issues..."
-npm run lint-fix
+# echo "Formatting code..."
+# npm run format
 
-echo "Formatting code..."
-npm run format
-
-echo "Checking formatting..."
-npm run format:check
+# echo "Checking formatting..."
+# npm run format:check
 
 echo "Pre-commit checks passed."

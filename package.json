@@ -66,5 +66,8 @@
     "tailwindcss": "3.3.1",
     "typescript": "5.0.3",
     "uuid": "^9.0.1"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,md}": "eslint --fix"
   }
 }
