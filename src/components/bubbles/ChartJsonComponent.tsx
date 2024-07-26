@@ -55,7 +55,7 @@ export const ChartJsonComponent = (props: Props) => {
     if (optionsData && optionsData.describe) {
         SetDescribe(optionsData.describe)
     }
-    if (!"customization.isDarkMode") {
+    if (optionsData && optionsData.theme === 'dark') {
       optionsData.textStyle = {
           color: '#ffffff'
       }
@@ -144,6 +144,11 @@ export const ChartJsonComponent = (props: Props) => {
                         optionsData.visualMap = null
                     }
                 }
+                if (lastType !== 'radar') {
+                    if (optionsData && optionsData.radar) {
+                        optionsData.radar = null
+                    }
+                }
             }
             if (optionsData && optionsData.series && optionsData.series[0] && optionsData.series[0].data.length > 0) {
                 const lastType = _.get(_.last(optionsData.series), 'type')
@@ -211,6 +216,7 @@ export const ChartJsonComponent = (props: Props) => {
                   }
               })()
           }
+          //同步获取数据
             // fetchData(lastType).then((res) => {
             //   if (res) {
             //     getGeoJsonData(res).then((geoJson: any) => {
@@ -228,8 +234,6 @@ export const ChartJsonComponent = (props: Props) => {
         }
       }
     }
-    chart = echarts.init(chartRef,'shine');
-    chart.setOption(optionsData);
     // window.addEventListener("resize", () => chart?.resize())
   });
 
@@ -323,11 +327,14 @@ export const ChartJsonComponent = (props: Props) => {
     return <div innerHTML={markdown} />;
   };
   
-  return <div style={{ width: '100%'}}><div ref={chartRef} style={{ width: '100%', height: '400px', 'margin-top': '20px' }} id="echarts" />
-    {/* {describe() && describe().length > 0 ? (
-    <div>{describe()}</div>
-    ) : null} */}
-     {/* <div innerHTML={highlightText(describe())} /> */}
+  return (
+    <div style={{ width: '100%' }}>
+      <div ref={chartRef} style={{ width: '100%', height: '400px', 'margin-top': '20px' }} id="echarts" />
+      {/* {describe() && describe().length > 0 ? (
+        <div>{describe()}</div>
+        ) : null} */}
+      {/* <div innerHTML={highlightText(describe())} /> */}
       {renderDescribe()}
-  </div>;
+    </div>
+  );
 };

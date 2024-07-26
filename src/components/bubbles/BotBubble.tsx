@@ -43,7 +43,7 @@ marked.setOptions({
 export const BotBubble = (props: Props) => {
   let botMessageEl: HTMLDivElement | undefined;
 
-  const [isCharts, setIsCharts] = createSignal(false);
+  // const [isCharts, setIsCharts] = createSignal(false);
   const downloadFile = async (fileAnnotation: any) => {
     try {
       const response = await sendFileDownloadQuery({
@@ -82,45 +82,48 @@ export const BotBubble = (props: Props) => {
     return <video controls src={props.src} style={{ "max-width": '100%' }} />;
   };
   const parseMarkdown = (markdownText: string): ChildNode[] => {
-    const html = marked(markdownText);
+    const html = marked.parse(markdownText) as string;
     const template = document.createElement("template");
     template.innerHTML = html.trim();
     return Array.from(template.content.childNodes);
   };
-  
-  interface MarkdownComponentProps {
-    content: string;
-    props:any
-  }
+  // TODO:后期优化各类组件渲染
   const MarkdownComponent = () => {
     // console.log('props', props);
     const parsedNodes = parseMarkdown(formatStr(props.message));
     const elements = parsedNodes.map((node, index) => {
-      // TODO:后期优化各类组件渲染
+      const element = node as HTMLElement;
       if (node.nodeType === Node.ELEMENT_NODE) {
-        const element = node as HTMLElement;
         // console.log('element', element);
         if (isChart() && element.dataset.code) {
-          return <ChartJsonComponent  data={element.dataset.code} />;
+          return <ChartJsonComponent data={element.dataset.code} />;
         } else if (element.dataset.video) {
-          return <VideoComponent  src={element.dataset.video} />;
+          return <VideoComponent src={element.dataset.video} />;
         } else if (element.tagName === 'IMG') {
-          return <ImageComponent  src={(element as HTMLImageElement).src} alt={(element as HTMLImageElement).alt} />;
+          return <ImageComponent src={(element as HTMLImageElement).src} alt={(element as HTMLImageElement).alt} />;
         }
       }
-      // console.log('node', element);
-      return <div  innerHTML={node.innerHTML}  
-      class="px-4 py-2 ml-2 whitespace-pre-wrap max-w-full chatbot-host-bubble"
-      data-testid="host-bubble"
-      ref={botMessageEl}
-      style={{
-        'background-color': props.backgroundColor ?? defaultBackgroundColor,
-        color: props.textColor ?? defaultTextColor,
-        'border-radius': '6px',
-      }} />
+      return <>{element}</>;
     });
-  
-    return <>{elements}</>;
+
+    if (!isChart()) {
+      return (
+        <div
+          class="px-4 py-2 ml-2 whitespace-pre-wrap max-w-full chatbot-host-bubble"
+          data-testid="host-bubble"
+          ref={botMessageEl}
+          style={{
+            'background-color': props.backgroundColor ?? defaultBackgroundColor,
+            color: props.textColor ?? defaultTextColor,
+            'border-radius': '6px',
+          }}
+        >
+          {elements}
+        </div>
+      );
+    } else {
+      return <>{elements}</>;
+    }
   };
   const hasHTML = (str: string) => {
     return /<[a-z][\s\S]*>/i.test(str)
@@ -132,13 +135,6 @@ export const BotBubble = (props: Props) => {
     try {
         if (hasHTML(message) && _.includes(message, '<html>') && !_.includes(message, '```html')) {
             return '```html' + message + '```'
-            // } else if ((message.indexOf('image') > 0 && message.indexOf('text') > 0) || message.indexOf('data:image/jpeg;base64,') > 0) {
-            //     const obj = JSON.parse(message)
-            //     const text = obj.text
-            //     const image = obj.image
-            //     console.log(image)
-            //     const result = '![](' + image + ')'
-            //     return result + '<br />' + text
         } else if (message.indexOf('<img>') !== -1) {
             // 匹配字符串<img>标签之间的内容
             const match = message.match(/<img[^>]*>(.*?)<\/img>/)
@@ -196,8 +192,7 @@ export const BotBubble = (props: Props) => {
   // });
   onMount(() => {
     if (botMessageEl) {
-      // 判断如果是图标option的数据，展示echarts图表
-      // botMessageEl.innerHTML = marked.parse(formatStr(bbb[1].content)) as string;
+      // 判断如果fileAnnotation的数据追加显示
       if (props.fileAnnotations && props.fileAnnotations.length) {
         for (const annotations of props.fileAnnotations) {
           const button = document.createElement('button');

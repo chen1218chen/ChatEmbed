@@ -6,11 +6,6 @@ interface Image {
   title: string | null;
   text: string;
 }
-// interface Code {
-//   code: string;
-//   infostring: string | undefined;
-//   escaped: boolean;
-// }
 interface Code {
   type: "code";
   raw: string;
@@ -19,13 +14,13 @@ interface Code {
   text: string;
   escaped?:boolean
 }
-interface HTML {
-  type: "html";
-  raw: string;
-  pre: boolean;
-  text: string;
-  block: boolean;
-}
+// interface HTML {
+//   type: "html";
+//   raw: string;
+//   pre: boolean;
+//   text: string;
+//   block: boolean;
+// }
 class CustomRenderer extends Renderer {
   constructor() {
     console.log("CustomRenderer");
@@ -33,8 +28,7 @@ class CustomRenderer extends Renderer {
   }
   // 重写图片渲染方法
   image({ href, title, text }: Image): string {
-    console.log(123456);
-    console.log(href, title, text);
+    // console.log(href, title, text);
     if (text == 'Video') {
       return `<video
         width='640'
