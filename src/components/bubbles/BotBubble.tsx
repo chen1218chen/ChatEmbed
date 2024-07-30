@@ -95,12 +95,23 @@ export const BotBubble = (props: Props) => {
       const element = node as HTMLElement;
       if (node.nodeType === Node.ELEMENT_NODE) {
         // console.log('element', element);
-        if (isChart() && element.dataset.code) {
-          return <ChartJsonComponent data={element.dataset.code} />;
+        if (element.dataset.code) {
+          // console.log('element.dataset.code', element.dataset.code);
+          if (isChart()) {
+            return <ChartJsonComponent data={element.dataset.code} />;
+          } else {
+            return (
+              <pre class="language-javascript">
+                <code class="language-javascript">{element.dataset.code}</code>
+              </pre>
+            );
+          }
         } else if (element.dataset.video) {
           return <VideoComponent src={element.dataset.video} />;
         } else if (element.tagName === 'IMG') {
           return <ImageComponent src={(element as HTMLImageElement).src} alt={(element as HTMLImageElement).alt} />;
+        } else {
+          return <>{element}</>;
         }
       }
       return <>{element}</>;

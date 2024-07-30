@@ -4,7 +4,6 @@ import * as echarts from 'echarts';
 import _ from 'lodash';
 import { sendRequest } from '@/utils/index';
 import chainMap from '../../assets/mapjson/china.json';
-// import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { WKTList2GeoJSON } from '@/utils/toGeoJson'
 import { getGeoDataApi } from '@/queries/sendMessageQuery';
 import chartThemeDark from '../../assets/mapjson/echartDart.json';
@@ -35,7 +34,7 @@ export const ChartJsonComponent = (props: Props) => {
   let chartRef: HTMLDivElement | undefined;
   let chart: any;
   const [describe, SetDescribe] = createSignal<string>('');
-
+  // console.log(props.data);
   // createEffect(() => {
   //   if (chartRef) {
   //     if (chart) {
@@ -233,78 +232,19 @@ export const ChartJsonComponent = (props: Props) => {
           }
         }
       }
+    } else {
+        // console.log('optionsData====>', optionsData)
+        const chart = echarts.init(chartRef, 'shine')
+        if (optionsData) {
+            chart.setOption(optionsData)
+        }
+        // chart.setOption(optionsData)
+        return () => {
+            chart.dispose()
+        }
     }
     // window.addEventListener("resize", () => chart?.resize())
   });
-
-  // const fetchData = async (cityName: string) => {
-  //   let cityCode = null;
-
-  //   const response = await sendRequest({
-  //     url: 'https://restapi.amap.com/v3/config/district',
-  //     method: 'GET',
-  //     body: {
-  //       key: '2ea647be48d23196257bb83c5b08da54',
-  //       keywords: cityName,
-  //       subdistrict: 0,
-  //     },
-  //   });
-  //   if (response.data) {
-  //     // 在这里处理返回的数据
-  //     const data: any = response.data;
-  //     const districts = data.districts;
-  //     if (districts && districts.length > 0) {
-  //       for (let i = 0; i < districts.length; i++) {
-  //         if (districts[i].adcode) {
-  //           cityCode = districts[i].adcode;
-  //         }
-  //       }
-  //     }
-  //   }
-
-  //   return cityCode;
-  // };
-  // const fetchData = async (cityName: string) => {
-  //   let cityCode = null;
-
-  //   const response = await sendRequest({
-  //     url: 'https://restapi.amap.com/v3/config/district',
-  //     method: 'GET',
-  //     body: {
-  //       key: '2ea647be48d23196257bb83c5b08da54',
-  //       keywords: cityName,
-  //       subdistrict: 0,
-  //     },
-  //   });
-  //   if (response.data) {
-  //     // 在这里处理返回的数据
-  //     const data: any = response.data;
-  //     const districts = data.districts;
-  //     if (districts && districts.length > 0) {
-  //       for (let i = 0; i < districts.length; i++) {
-  //         if (districts[i].adcode) {
-  //           cityCode = districts[i].adcode;
-  //         }
-  //       }
-  //     }
-  //   }
-
-  //   return cityCode;
-  // };
-
-  // const getGeoJsonData = async (adcode: string) => {
-  //   let geoJsonData = null;
-
-  //   const result = await sendRequest({
-  //     url: `https://geo.datav.aliyun.com/areas_v3/bound/geojson?code=${adcode}_full`,
-  //     method: 'GET',
-  //   });
-  //   if (result.data) {
-  //     geoJsonData = result.data;
-  //   }
-
-  //   return geoJsonData;
-  // };
 
    // 高亮处理 describe 内容
    const highlightText = (text: string) => {
@@ -330,11 +270,13 @@ export const ChartJsonComponent = (props: Props) => {
   return (
     <div style={{ width: '100%' }}>
       <div ref={chartRef} style={{ width: '100%', height: '400px', 'margin-top': '20px' }} id="echarts" />
-      {/* {describe() && describe().length > 0 ? (
-        <div>{describe()}</div>
-        ) : null} */}
       {/* <div innerHTML={highlightText(describe())} /> */}
-      {renderDescribe()}
+      {/* {renderDescribe()} */}
+      {describe() && describe().length > 0 ? (
+        <pre class="language-javascript">
+          <code class="language-javascript">{describe()}</code>
+        </pre>
+      ) : null}
     </div>
   );
 };
