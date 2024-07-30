@@ -75,6 +75,14 @@ export const UploadFileDialog = (props: Props) => {
     setValidated(false);
     props.handleClose();
   };
+  const docTypes = {
+    'application/msword': [], //.doc
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': [], //.docx
+    'application/pdf': [],
+    'text/plain': ['.txt', '.md'],
+    'application/vnd.ms-excel': [], //.xls
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': [], //.xlsx
+  }
   return (
     <>
       <Modal show={props.show} onHide={handleClose} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
@@ -87,7 +95,7 @@ export const UploadFileDialog = (props: Props) => {
           <Form noValidate validated={validated()} onSubmit={handleSubmit}>
               <Form.Group controlId="formFile" class="mb-3">
                 <Form.Label>选择要上传的本地文件</Form.Label>
-                <Form.Control type="file" required id="fileUpload" onChange={handleSelect} accept="image/*" />
+                <Form.Control type="file" required id="fileUpload" onChange={handleSelect} accept={Object.keys(docTypes).join(',')} />
                 <Form.Control.Feedback type="invalid">请选择上传文件.</Form.Control.Feedback>
               </Form.Group>
               <Button type="submit" style={{ 'margin-right': '10px' }}>

@@ -10,8 +10,6 @@ type ImageUploadButtonProps = {
 } & JSX.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const FileUploadButton = (props: ImageUploadButtonProps) => {
-    console.log("FileUploadButton rendered" ,props);
-    
   return (
     <button
       type="submit"
