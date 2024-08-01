@@ -8,8 +8,7 @@
 **/yarn.lock
 
 ## build
-**/dist merge=ours
+**/dist 
 **/build
 
-rollup.config.js merge=ours
-.gitignore merge=ours
+rollup.config.js
