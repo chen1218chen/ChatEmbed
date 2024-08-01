@@ -116,7 +116,7 @@ export const GeoUnZipBytes = (bytes: string): number[][] => {
     if (!bytes) {
         return rtv;
     }
-
+    const Zip_Scale=1000000
     //先提取出第一个坐标
     let x = '';
     let y = '';
