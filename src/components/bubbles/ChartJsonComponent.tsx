@@ -243,7 +243,7 @@ export const ChartJsonComponent = (props: Props) => {
             chart.dispose()
         }
     }
-    window.addEventListener("resize", () => chart?.resize())
+    // window.addEventListener("resize", () => chart?.resize())
   });
 
    // 高亮处理 describe 内容
@@ -268,11 +268,7 @@ export const ChartJsonComponent = (props: Props) => {
   };
   
   return (
-    <div
-      style={{
-        width: '100%',
-      }}
-    >
+    <div style={{ width: '100%' }}>
       <div ref={chartRef} style={{ width: '100%', height: '400px', 'margin-top': '20px' }} id="echarts" />
       {/* <div innerHTML={highlightText(describe())} /> */}
       {/* {renderDescribe()} */}

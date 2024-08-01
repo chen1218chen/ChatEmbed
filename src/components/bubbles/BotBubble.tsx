@@ -116,39 +116,25 @@ export const BotBubble = (props: Props) => {
       }
       return <>{element}</>;
     });
-    // if (!isChart()) {
-    //   return (
-    //     <div
-    //       class="px-4 py-2 ml-2 whitespace-pre-wrap max-w-full chatbot-host-bubble"
-    //       data-testid="host-bubble"
-    //       ref={botMessageEl}
-    //       style={{
-    //         'background-color': props.backgroundColor ?? defaultBackgroundColor,
-    //         color: props.textColor ?? defaultTextColor,
-    //         'border-radius': '6px',
-    //       }}
-    //     >
-    //       {elements}
-    //     </div>
-    //   );
-    // } else {
-    //   return <>{elements}</>;
-    // }
-    return (
-      <div
-        class="px-4 py-2 ml-2 whitespace-pre-wrap max-w-full chatbot-host-bubble"
-        data-testid="host-bubble"
-        ref={botMessageEl}
-        style={{
-          'background-color': props.backgroundColor ?? defaultBackgroundColor,
-          color: props.textColor ?? defaultTextColor,
-          'border-radius': '6px',
-          "width": '100%',
-        }}
-      >
-        {elements}
-      </div>
-    );
+
+    if (!isChart()) {
+      return (
+        <div
+          class="px-4 py-2 ml-2 whitespace-pre-wrap max-w-full chatbot-host-bubble"
+          data-testid="host-bubble"
+          ref={botMessageEl}
+          style={{
+            'background-color': props.backgroundColor ?? defaultBackgroundColor,
+            color: props.textColor ?? defaultTextColor,
+            'border-radius': '6px',
+          }}
+        >
+          {elements}
+        </div>
+      );
+    } else {
+      return <>{elements}</>;
+    }
   };
   const hasHTML = (str: string) => {
     return /<[a-z][\s\S]*>/i.test(str)
