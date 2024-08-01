@@ -8,7 +8,7 @@
 **/yarn.lock
 
 ## build
-**/dist
+**/dist merge=ours
 **/build
 
 rollup.config.js merge=ours
