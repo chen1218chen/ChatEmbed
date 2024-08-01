@@ -10,5 +10,3 @@
 ## build
 **/dist 
 **/build
-
-rollup.config.js
