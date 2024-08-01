@@ -10,3 +10,5 @@
 ## build
 **/dist
 **/build
+
+rollup.config.js merge=ours
