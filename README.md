@@ -60,6 +60,7 @@ To enable full screen, add `margin: 0` to <code>body</code> style, and confirm y
     Chatbot.initFull({
       chatflowid: '<chatflowid>',
       apiHost: 'http://localhost:3000',
+      category: 'DATABASE' //可选，值为应用类型
       theme: {
         chatWindow: {
           // height: 700, don't set height
@@ -81,6 +82,7 @@ You can also customize chatbot with different configuration
   Chatbot.init({
     chatflowid: '91e9c803-5169-4db9-8207-3c0915d71c5f',
     apiHost: 'http://localhost:3000',
+    category: 'DATABASE' //可选，值为应用类型
     chatflowConfig: {
       // topK: 2
     },
@@ -135,3 +137,4 @@ Source code in this repository is made available under the [MIT License]
 - 1.0.3 增加图表可视化的功能
 - 1.0.4 增加图片分析功能，支持在线图片和上传图片
 - 1.0.7 增加poweredByUrl参数
+- 1.0.8 增加对BI分析、数字人，图片分析应用的支持
